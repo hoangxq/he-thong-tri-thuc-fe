@@ -8,23 +8,31 @@ import { CanHoReq, CanHoRes } from '../commons/can-ho';
   providedIn: 'root'
 })
 export class CanHoService {
-  private baseURL = "http://localhost:8081/kbs/api";
+  private baseURL = "http://localhost:8081/kbs/api/can-ho";
   constructor(private httpClient:HttpClient) { }
 
   dinhGiaCanHo(canHoReq: CanHoReq):Observable<any>{
-    return this.httpClient.post(`${this.baseURL}/can-ho/dinh-gia`, canHoReq);
+    return this.httpClient.post(`${this.baseURL}/dinh-gia`, canHoReq);
   }
 
   themMoiCanHo(canHoReq: CanHoReq):Observable<Object>{
-    return this.httpClient.post(`${this.baseURL}/can-ho/them-moi`, canHoReq);
+    return this.httpClient.post(`${this.baseURL}/them-moi`, canHoReq);
+  }
+
+  capNhatCanHo(idCanHo: number, canHoReq: CanHoReq):Observable<any>{
+    return this.httpClient.put(`${this.baseURL}/${idCanHo}`, canHoReq);
   }
 
   getAllCanHoDaXuLy():Observable<CanHoRes[]>{
-    return this.httpClient.get<CanHoRes[]>(`${this.baseURL}/can-ho/da-xu-ly`);
+    return this.httpClient.get<CanHoRes[]>(`${this.baseURL}/da-xu-ly`);
   }
 
   getAllCanHoDangXuLy():Observable<CanHoRes[]>{
-    return this.httpClient.get<CanHoRes[]>(`${this.baseURL}/can-ho/dang-xu-ly`);
+    return this.httpClient.get<CanHoRes[]>(`${this.baseURL}/dang-xu-ly`);
+  }
+
+  getCanHoById(idCanHo: number):Observable<CanHoRes>{
+    return this.httpClient.get<CanHoRes>(`${this.baseURL}/${idCanHo}`);
   }
 
 }

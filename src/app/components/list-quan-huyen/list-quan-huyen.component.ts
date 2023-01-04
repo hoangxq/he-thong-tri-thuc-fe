@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {DataSource} from '@angular/cdk/collections';
-import { Observable, ReplaySubject } from 'rxjs';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { QuanHuyen } from 'src/app/commons/quan-huyen';
 import { QuanHuyenService } from 'src/app/services/quan-huyen.service';
 
@@ -10,26 +9,34 @@ import { QuanHuyenService } from 'src/app/services/quan-huyen.service';
   templateUrl: './list-quan-huyen.component.html',
   styleUrls: ['./list-quan-huyen.component.css']
 })
-export class ListQuanHuyenComponent {
+export class ListQuanHuyenComponent implements AfterViewInit{
 
-  errorMessage : Error = new Error;
+  errorMessage: Error = new Error;
   listQuanHuyen!: QuanHuyen[];
-  quanHuyenForm!: FormGroup; 
-  
-  constructor(private quanHuyenService: QuanHuyenService) { }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.getAllQuanHuyen();
   }
 
-  getAllQuanHuyen(){
+  displayedColumns: string[] = ['id', 'ten', 'moTa', 'action'];
+  dataSource = new MatTableDataSource<QuanHuyen>();
+
+
+  constructor(private quanHuyenService: QuanHuyenService) { }
+
+  getAllQuanHuyen() {
     this.quanHuyenService.getAllQuanHuyen().subscribe(data => {
       this.listQuanHuyen = data;
-      console.log(this.listQuanHuyen);
+      this.dataSource.data = data;
     }, error => {
       this.errorMessage = error.error;
       console.log(this.errorMessage);
     });
   }
-
 }

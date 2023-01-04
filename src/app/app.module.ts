@@ -20,6 +20,8 @@ import { CommonModule } from '@angular/common';
 import { ThemMoiCanHoComponent } from './components/them-moi-can-ho/them-moi-can-ho.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CapNhatCanHoComponent } from './components/cap-nhat-can-ho/cap-nhat-can-ho.component';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ThemPhuongXaComponent,
     ListCanHoDangXuLyComponent,
     DinhGiaCanHoComponent,
-    ThemMoiCanHoComponent
+    ThemMoiCanHoComponent,
+    CapNhatCanHoComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     CommonModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

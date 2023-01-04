@@ -7,6 +7,7 @@ export class CanHoReq {
     soPhongNgu!: number;
     soPhongWc!: number;
     giaTien!: number;
+    trangThai!: string;
 }
 
 export class CanHoRes {

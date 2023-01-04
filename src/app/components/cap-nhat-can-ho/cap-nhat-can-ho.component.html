@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Định giá căn hộ</h1>
+                <h1 class="m-0">Cập nhật căn hộ</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
-                    <li class="breadcrumb-item active">Định giá căn hộ</li>
+                    <li class="breadcrumb-item active">Cập nhật căn hộ</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -19,14 +19,11 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <div [ariaDisabled]="canHoDinhGia.id >= 0" class="modal fade" id="modal-xl">
+        <div class="modal fade" id="modal-xl">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 *ngIf="canHoDinhGia.giaTien != 0" class="modal-title">Kết quả định giá (Mức giá chỉ ở dạng
-                            ước lượng)</h4>
-                        <h4 *ngIf="canHoDinhGia.giaTien == 0" class="modal-title">Chưa thể định giá do không có căn hộ
-                            nào tương đồng</h4>
+                        <h4 class="modal-title">Cập nhật thành công</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -49,16 +46,16 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{canHoDinhGia.id}}</td>
-                                        <td>{{canHoDinhGia.dienTich}}</td>
-                                        <td>{{canHoDinhGia.phuongXaRes.quanHuyen.ten}}</td>
-                                        <td>{{canHoDinhGia.phuongXaRes.ten}}</td>
-                                        <td>{{canHoDinhGia.soPhongNgu}}</td>
-                                        <td>{{canHoDinhGia.soPhongWc}}</td>
-                                        <td>{{canHoDinhGia.huong}}</td>
-                                        <td *ngIf="canHoDinhGia.giaTien != 0">{{canHoDinhGia.giaTien | number}} VNĐ</td>
-                                        <td *ngIf="canHoDinhGia.giaTien == 0">Chưa thể định giá</td>
-                                        <td>{{canHoDinhGia.trangThai}}</td>
+                                        <td>{{canHoRes.id}}</td>
+                                        <td>{{canHoRes.dienTich}}</td>
+                                        <td>{{canHoRes.phuongXaRes.quanHuyen.ten}}</td>
+                                        <td>{{canHoRes.phuongXaRes.ten}}</td>
+                                        <td>{{canHoRes.soPhongNgu}}</td>
+                                        <td>{{canHoRes.soPhongWc}}</td>
+                                        <td>{{canHoRes.huong}}</td>
+                                        <td *ngIf="canHoRes.giaTien != 0">{{canHoRes.giaTien | number}} VNĐ</td>
+                                        <td *ngIf="canHoRes.giaTien == 0">Chưa thể định giá</td>
+                                        <td>{{canHoRes.trangThai}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -72,7 +69,6 @@
 
             </div>
         </div>
-
         <div class="row">
             <div class="col">
                 <!-- general form elements -->
@@ -82,52 +78,62 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form (ngSubmit)="onDinhGiaCanHo()" [formGroup]="canHoForm">
+                    <form (ngSubmit)="onCapNhatCanHo()" [formGroup]="canHoForm">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Diện tích sử dụng</label>
-                                <input formControlName="dienTich" [(ngModel)]="newCanHo.dienTich" type="number"
+                                <input formControlName="dienTich" [(ngModel)]="canHoReq.dienTich" type="number"
                                     class="form-control" placeholder="Nhập diện tích">
                             </div>
                             <div class="form-group">
                                 <label>Thuộc Quận/Huyện</label>
                                 <select (change)="changeQuanHuyen($event)" class="form-control">
                                     <option value="">Chọn Quận/Huyện</option>
-                                    <option *ngFor="let item of listQuanHuyen" [value]="item.id">{{item.ten}}</option>
+                                    <option *ngFor="let item of listQuanHuyen" [value]="item.id" [selected]="item.id==canHoRes.phuongXaRes.quanHuyen.id">{{item.ten}}</option>
                                 </select>
                             </div>
-                            <div [hidden]="checkQuanHuyen == 0" class="form-group">
+                            <div class="form-group">
                                 <label>Thuộc Phường/Xã</label>
-                                <select (change)="changePhuongXa($event)" formControlName="idPhuongXa"
-                                    class="form-control">
+                                <select (change)="changePhuongXa($event)" class="form-control">
                                     <option value="">Chọn Phường/Xã</option>
-                                    <option *ngFor="let item of listPhuongXa" [value]="item.id">{{item.ten}}</option>
+                                    <option *ngFor="let item of listPhuongXa" [value]="item.id" [selected]="item.id==canHoReq.idPhuongXa">{{item.ten}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="">Số phòng ngủ</label>
-                                <input formControlName="soPhongNgu" [(ngModel)]="newCanHo.soPhongNgu" type="number"
+                                <input formControlName="soPhongNgu" [(ngModel)]="canHoReq.soPhongNgu" type="number"
                                     class="form-control" placeholder="Nhập số phòng ngủ">
                             </div>
                             <div class="form-group">
                                 <label for="">Số phòng vệ sinh</label>
-                                <input formControlName="soPhongWc" [(ngModel)]="newCanHo.soPhongWc" type="number"
+                                <input formControlName="soPhongWc" [(ngModel)]="canHoReq.soPhongWc" type="number"
                                     class="form-control" placeholder="Nhập số phòng vệ sinh">
                             </div>
                             <div class="form-group">
+                                <label for="">Giá tiền</label>
+                                <input formControlName="giaTien" [(ngModel)]="canHoReq.giaTien" type="number"
+                                    class="form-control" placeholder="Nhập giá tiền">
+                            </div>
+                            <div class="form-group">
                                 <label>Hướng căn hộ</label>
-                                <select (change)="changeHuong($event)" formControlName="huong" class="form-control">
+                                <select (change)="changeHuong($event)" class="form-control">
                                     <option value="">Chọn Hướng</option>
-                                    <option *ngFor="let item of listHuong" [value]="item.huong">{{"Hướng " +
-                                        item.huong}}</option>
+                                    <option *ngFor="let item of listHuong" [value]="item.huong" [selected]="item.huong==canHoRes.huong">{{"Hướng " + item.huong}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select (change)="changeTrangThai($event)" formControlName="huong" class="form-control">
+                                    <option value="PENDING" [selected]="canHoRes.trangThai=='PENDING'">Đang xử lý</option>
+                                    <option value="DONE" [selected]="canHoRes.trangThai=='DONE'">Đã xử lý</option>
                                 </select>
                             </div>
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button [disabled]="!canHoForm.valid" type="submit" class="btn btn-primary"
-                                data-toggle="modal" data-target="#modal-xl">Submit</button>
+                            <button [disabled]="!canHoForm.valid" type="submit"
+                                class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">Submit</button>
                         </div>
                     </form>
                 </div>

@@ -41,22 +41,46 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tên Quận huyện</th>
-                                    <th>Mô tả</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let item of listQuanHuyen">
-                                <tr>
-                                    <td>{{item.id}}</td>
-                                    <td>{{item.ten}}</td>
-                                    <td>{{item.moTa}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="mat-elevation-z8">
+                            <table class="table table-hover text-nowrap table-bordered" mat-table
+                                [dataSource]="dataSource">
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="ten">
+                                    <th mat-header-cell *matHeaderCellDef> Tên Quận/Huyện </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.ten}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="moTa">
+                                    <th mat-header-cell *matHeaderCellDef> Mô tả </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.moTa}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Hành động </th>
+                                    <td mat-cell *matCellDef="let element"> <a
+                                            class="btn btn-success">Cập
+                                            nhật</a>
+                                        <a class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+
+                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                                aria-label="Select page of periodic elements">
+                            </mat-paginator>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

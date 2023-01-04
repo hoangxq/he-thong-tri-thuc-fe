@@ -41,41 +41,86 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Diện tích</th>
-                                    <th>Quận/Huyện</th>
-                                    <th>Phường/Xã</th>
-                                    <th>Số phòng ngủ</th>
-                                    <th>Số phòng WC</th>
-                                    <th>Hướng</th>
-                                    <th>Giá bán ước tính</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of listCanHo">
-                                    <td>{{item.id}}</td>
-                                    <td>{{item.dienTich}}</td>
-                                    <td>{{item.phuongXaRes.quanHuyen.ten}}</td>
-                                    <td>{{item.phuongXaRes.ten}}</td>
-                                    <td>{{item.soPhongNgu}}</td>
-                                    <td>{{item.soPhongWc}}</td>
-                                    <td>{{item.huong}}</td>
-                                    <td *ngIf="item.giaTien != 0">{{item.giaTien | number}} VNĐ</td>
-                                    <td *ngIf="item.giaTien == 0">Chưa thể định giá</td>
-                                    <td>{{item.trangThai}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="mat-elevation-z8">
+                            <table class="table table-hover text-nowrap table-bordered" mat-table
+                                [dataSource]="dataSource">
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="quanHuyen">
+                                    <th mat-header-cell *matHeaderCellDef> Quận/Huyện </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.phuongXaRes.quanHuyen.ten}} </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="phuongXa">
+                                    <th mat-header-cell *matHeaderCellDef> Phường/Xã </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.phuongXaRes.ten}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="dienTich">
+                                    <th mat-header-cell *matHeaderCellDef> Diện tích </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.dienTich + " m2"}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="soPhongNgu">
+                                    <th mat-header-cell *matHeaderCellDef> Số phòng ngủ </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.soPhongNgu}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="soPhongWc">
+                                    <th mat-header-cell *matHeaderCellDef> Số phòng WC </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.soPhongWc}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="huong">
+                                    <th mat-header-cell *matHeaderCellDef> Hướng </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.huong}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="giaBan">
+                                    <th mat-header-cell *matHeaderCellDef> Giá bán ước tính </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <p *ngIf="element.giaTien != 0">{{element.giaTien | number}} VNĐ</p>
+                                        <p *ngIf="element.giaTien == 0">Chưa thể định giá</p>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="trangThai">
+                                    <th mat-header-cell *matHeaderCellDef> Trạng thái </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.trangThai}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Hành động </th>
+                                    <td mat-cell *matCellDef="let element"> <a
+                                            routerLink="/cap-nhat-can-ho/{{element.id}}" class="btn btn-success">Cập
+                                            nhật</a>
+                                        <a class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+
+                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                                aria-label="Select page of periodic elements">
+                            </mat-paginator>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
-                    <!-- <mat-paginator #paginator class="demo-paginator" [length]="length"
-                        [pageSize]="pageSize" 
-                        [pageIndex]="pageIndex" aria-label="Select page">
-                    </mat-paginator> -->
                 </div>
                 <!-- /.card -->
             </div>
