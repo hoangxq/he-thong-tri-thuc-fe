@@ -1,0 +1,81 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Danh sách căn hộ đã xử lý</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
+                    <li class="breadcrumb-item active">Danh sách căn hộ đã xử lý</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Căn hộ đã xử lý</h3>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right"
+                                    placeholder="Search">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Diện tích</th>
+                                    <th>Quận/Huyện</th>
+                                    <th>Phường/Xã</th>
+                                    <th>Số phòng ngủ</th>
+                                    <th>Số phòng WC</th>
+                                    <th>Hướng</th>
+                                    <th>Giá bán</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of listCanHo">
+                                <tr>
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.dienTich}}</td>
+                                    <td>{{item.phuongXaRes.quanHuyen.ten}}</td>
+                                    <td>{{item.phuongXaRes.ten}}</td>
+                                    <td>{{item.soPhongNgu}}</td>
+                                    <td>{{item.soPhongWc}}</td>
+                                    <td>{{item.huong}}</td>
+                                    <td>{{item.giaTien | number}} VNĐ</td>
+                                    <td>{{item.trangThai}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

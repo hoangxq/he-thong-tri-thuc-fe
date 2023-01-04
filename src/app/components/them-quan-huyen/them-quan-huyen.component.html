@@ -1,0 +1,56 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Thêm mới Quận huyện</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
+                    <li class="breadcrumb-item active">Thêm mới Quận huyện</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Quận huyện</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form (ngSubmit)="onAddQuanHuyen()" [formGroup]="quanHuyenForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tên quận huyện</label>
+                                <input formControlName="ten" [(ngModel)]="newQuanHuyen.ten" type="text" class="form-control" 
+                                    placeholder="Nhập tên Quận huyện">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Mô tả</label>
+                                <input formControlName="moTa" [(ngModel)]="newQuanHuyen.moTa" type="text" class="form-control"
+                                    placeholder="Nhập mô tả">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button [disabled]="!quanHuyenForm.valid" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

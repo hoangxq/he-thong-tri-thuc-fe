@@ -1,0 +1,88 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Thêm căn hộ mới</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
+                    <li class="breadcrumb-item active">Thêm căn hộ</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Căn hộ</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form (ngSubmit)="onThemMoiCanHo()" [formGroup]="canHoForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Diện tích sử dụng</label>
+                                <input formControlName="dienTich" [(ngModel)]="newCanHo.dienTich" type="number"
+                                    class="form-control" placeholder="Nhập diện tích">
+                            </div>
+                            <div class="form-group">
+                                <label>Thuộc Quận/Huyện</label>
+                                <select (change)="changeQuanHuyen($event)" class="form-control">
+                                    <option value="">Chọn Quận/Huyện</option>
+                                    <option *ngFor="let item of listQuanHuyen" [value]="item.id">{{item.ten}}</option>
+                                </select>
+                            </div>
+                            <div [hidden]="checkQuanHuyen == 0" class="form-group">
+                                <label>Thuộc Phường/Xã</label>
+                                <select (change)="changePhuongXa($event)" formControlName="idPhuongXa" class="form-control">
+                                    <option value="">Chọn Phường/Xã</option>
+                                    <option *ngFor="let item of listPhuongXa" [value]="item.id">{{item.ten}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Số phòng ngủ</label>
+                                <input formControlName="soPhongNgu" [(ngModel)]="newCanHo.soPhongNgu" type="number"
+                                    class="form-control" placeholder="Nhập số phòng ngủ">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Số phòng vệ sinh</label>
+                                <input formControlName="soPhongWc" [(ngModel)]="newCanHo.soPhongWc" type="number"
+                                    class="form-control" placeholder="Nhập số phòng vệ sinh">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Giá tiền</label>
+                                <input formControlName="giaTien" [(ngModel)]="newCanHo.giaTien" type="number"
+                                    class="form-control" placeholder="Nhập giá tiền">
+                            </div>
+                            <div class="form-group">
+                                <label>Hướng căn hộ</label>
+                                <select (change)="changeHuong($event)" formControlName="huong" class="form-control">
+                                    <option value="">Chọn Hướng</option>
+                                    <option *ngFor="let item of listHuong" [value]="item.huong">{{"Hướng " + item.huong}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button [disabled]="!canHoForm.valid" type="submit"
+                                class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

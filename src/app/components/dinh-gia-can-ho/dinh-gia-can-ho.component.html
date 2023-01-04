@@ -1,0 +1,139 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Định giá căn hộ</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
+                    <li class="breadcrumb-item active">Định giá căn hộ</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="modal fade" id="modal-xl">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 *ngIf="canHoDinhGia.giaTien != 0" class="modal-title">Kết quả định giá (Mức giá chỉ ở dạng
+                            ước lượng)</h4>
+                        <h4 *ngIf="canHoDinhGia.giaTien == 0" class="modal-title">Chưa thể định giá do không có căn hộ
+                            nào tương đồng</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Diện tích</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
+                                        <th>Số phòng ngủ</th>
+                                        <th>Số phòng WC</th>
+                                        <th>Hướng</th>
+                                        <th>Giá bán</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{canHoDinhGia.id}}</td>
+                                        <td>{{canHoDinhGia.dienTich}}</td>
+                                        <td>{{canHoDinhGia.phuongXaRes.quanHuyen.ten}}</td>
+                                        <td>{{canHoDinhGia.phuongXaRes.ten}}</td>
+                                        <td>{{canHoDinhGia.soPhongNgu}}</td>
+                                        <td>{{canHoDinhGia.soPhongWc}}</td>
+                                        <td>{{canHoDinhGia.huong}}</td>
+                                        <td *ngIf="canHoDinhGia.giaTien != 0">{{canHoDinhGia.giaTien | number}} VNĐ</td>
+                                        <td *ngIf="canHoDinhGia.giaTien == 0">Chưa thể định giá</td>
+                                        <td>{{canHoDinhGia.trangThai}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Căn hộ</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form (ngSubmit)="onDinhGiaCanHo()" [formGroup]="canHoForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Diện tích sử dụng</label>
+                                <input formControlName="dienTich" [(ngModel)]="newCanHo.dienTich" type="number"
+                                    class="form-control" placeholder="Nhập diện tích">
+                            </div>
+                            <div class="form-group">
+                                <label>Thuộc Quận/Huyện</label>
+                                <select (change)="changeQuanHuyen($event)" class="form-control">
+                                    <option value="">Chọn Quận/Huyện</option>
+                                    <option *ngFor="let item of listQuanHuyen" [value]="item.id">{{item.ten}}</option>
+                                </select>
+                            </div>
+                            <div [hidden]="checkQuanHuyen == 0" class="form-group">
+                                <label>Thuộc Phường/Xã</label>
+                                <select (change)="changePhuongXa($event)" formControlName="idPhuongXa"
+                                    class="form-control">
+                                    <option value="">Chọn Phường/Xã</option>
+                                    <option *ngFor="let item of listPhuongXa" [value]="item.id">{{item.ten}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Số phòng ngủ</label>
+                                <input formControlName="soPhongNgu" [(ngModel)]="newCanHo.soPhongNgu" type="number"
+                                    class="form-control" placeholder="Nhập số phòng ngủ">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Số phòng vệ sinh</label>
+                                <input formControlName="soPhongWc" [(ngModel)]="newCanHo.soPhongWc" type="number"
+                                    class="form-control" placeholder="Nhập số phòng vệ sinh">
+                            </div>
+                            <div class="form-group">
+                                <label>Hướng căn hộ</label>
+                                <select (change)="changeHuong($event)" formControlName="huong" class="form-control">
+                                    <option value="">Chọn Hướng</option>
+                                    <option *ngFor="let item of listHuong" [value]="item.huong">{{"Hướng " +
+                                        item.huong}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button [disabled]="!canHoForm.valid" type="submit" class="btn btn-primary"
+                                data-toggle="modal" data-target="#modal-xl">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
