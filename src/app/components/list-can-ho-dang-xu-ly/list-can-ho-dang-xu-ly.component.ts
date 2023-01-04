@@ -10,7 +10,7 @@ import { CanHoService } from 'src/app/services/can-ho.service';
   templateUrl: './list-can-ho-dang-xu-ly.component.html',
   styleUrls: ['./list-can-ho-dang-xu-ly.component.css']
 })
-export class ListCanHoDangXuLyComponent implements AfterViewInit{
+export class ListCanHoDangXuLyComponent implements AfterViewInit {
 
   errorMessage: Error = new Error;
   listCanHo!: CanHoRes[];
@@ -22,7 +22,7 @@ export class ListCanHoDangXuLyComponent implements AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.getAllCanHoDaXuLy();
+    this.getAllCanHoDangXuLy();
   }
 
   displayedColumns: string[] = ['id', 'quanHuyen', 'phuongXa', 'dienTich', 'soPhongNgu', 'soPhongWc', 'huong', 'giaBan', 'trangThai', 'action'];
@@ -31,13 +31,24 @@ export class ListCanHoDangXuLyComponent implements AfterViewInit{
 
   constructor(private CanHoService: CanHoService) { }
 
-  getAllCanHoDaXuLy() {
+  getAllCanHoDangXuLy() {
     this.CanHoService.getAllCanHoDangXuLy().subscribe(data => {
       this.listCanHo = data;
-      this.dataSource.data = data;
+      this.dataSource.data = this.listCanHo;
     }, error => {
       this.errorMessage = error.error;
       console.log(this.errorMessage);
     });
+  }
+
+  onRemove(idCanHo: number) {
+    this.CanHoService.removeCanHoById(idCanHo).subscribe(data => {
+      this.listCanHo = this.listCanHo.filter(item => item.id !== idCanHo);
+      this.dataSource.data = this.listCanHo;
+      console.log(data);
+    }, error => {
+      this.errorMessage = error.error;
+      console.log(this.errorMessage);
+    })
   }
 }

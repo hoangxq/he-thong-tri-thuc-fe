@@ -35,4 +35,8 @@ export class CanHoService {
     return this.httpClient.get<CanHoRes>(`${this.baseURL}/${idCanHo}`);
   }
 
+  removeCanHoById(idCanHo: number):Observable<CanHoRes>{
+    return this.httpClient.delete<CanHoRes>(`${this.baseURL}/${idCanHo}`);
+  }
+
 }
