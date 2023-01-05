@@ -1,0 +1,174 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Tiến Lol</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['']">Home</a></li>
+                    <li class="breadcrumb-item active">Định giá căn hộ</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div [ariaDisabled]="canHoDinhGia.id >= 0" class="modal fade" id="modal-xl">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 *ngIf="canHoDinhGia.giaTien != 0" class="modal-title">Kết quả định giá (Mức giá chỉ ở dạng
+                            ước lượng)</h4>
+                        <h4 *ngIf="canHoDinhGia.giaTien == 0" class="modal-title">Chưa thể định giá do không có căn hộ
+                            nào tương đồng</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Diện tích</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
+                                        <th>Số phòng ngủ</th>
+                                        <th>Số phòng WC</th>
+                                        <th>Hướng</th>
+                                        <th>Giá bán</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{canHoDinhGia.id}}</td>
+                                        <td>{{canHoDinhGia.dienTich}}</td>
+                                        <td>{{canHoDinhGia.phuongXaRes.quanHuyen.ten}}</td>
+                                        <td>{{canHoDinhGia.phuongXaRes.ten}}</td>
+                                        <td>{{canHoDinhGia.soPhongNgu}}</td>
+                                        <td>{{canHoDinhGia.soPhongWc}}</td>
+                                        <td>{{canHoDinhGia.huong}}</td>
+                                        <td *ngIf="canHoDinhGia.giaTien != 0">{{canHoDinhGia.giaTien | number}} VNĐ</td>
+                                        <td *ngIf="canHoDinhGia.giaTien == 0">Chưa thể định giá</td>
+                                        <td>{{canHoDinhGia.trangThai}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a routerLink="/can-ho-dang-xu-ly" data-dismiss="modal" type="button" class="btn btn-primary">Save changes</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Căn hộ</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form (ngSubmit)="onDinhGiaCanHo()" [formGroup]="canHoForm">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tuổi</label>
+                                    <input min="60" max="100" type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter age">
+                                </div>
+                                <div class="form-group">
+                                    <label>Giới tính</label>
+                                    <select class="form-control">
+                                        <option>Nam</option>
+                                        <option>Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Biểu hiện đău ngực</label>
+                                    <select class="form-control">
+                                        <option>Đau thắt ngực ổn định</option>
+                                        <option>Đau thắt ngực không ổn định</option>
+                                        <option>Đau thắt ngực prinzmetal</option>
+                                        <option>Không đau thắt ngực</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Huyết áp</label>
+                                    <input min="94" max="200" type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter huyết áp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Lượng Cholesterol</label>
+                                    <input min="126" max="564" type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter huyết áp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Bạn có bị hạ đường huyết trong máu không</label>
+                                    <select class="form-control">
+                                        <option>Tôi có bị hạ đường huyết</option>
+                                        <option>Tôi không bị</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Biểu diễn kết quả đo điện tim</label>
+                                    <select class="form-control">
+                                        <option>Bình thường</option>
+                                        <option>Có sóng ST-T bất thường</option>
+                                        <option>Phì đại thất trái</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nhịp tim</label>
+                                    <input min="71" max="202" type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter huyết áp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Bạn có bị viêm họng</label>
+                                    <select class="form-control">
+                                        <option>Có</option>
+                                        <option>Không</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Độ lõm của sóng điện tim</label>
+                                    <input min="0" max="6.2" type="email" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter huyết áp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Độ dốc của đỉnh cao nhất đoạn sóng ST</label>
+                                    <select class="form-control">
+                                        <option>Dốc lên</option>
+                                        <option>Bằng phẳng</option>
+                                        <option>Xuống dốc</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button [disabled]="!canHoForm.valid" type="submit" class="btn btn-primary"
+                                data-toggle="modal" data-target="#modal-xl">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

@@ -10,6 +10,7 @@ import { ListCanHoDangXuLyComponent } from './components/list-can-ho-dang-xu-ly/
 import { DinhGiaCanHoComponent } from './components/dinh-gia-can-ho/dinh-gia-can-ho.component';
 import { ThemMoiCanHoComponent } from './components/them-moi-can-ho/them-moi-can-ho.component';
 import { CapNhatCanHoComponent } from './components/cap-nhat-can-ho/cap-nhat-can-ho.component';
+import { TienLolComponent } from './components/tien-lol/tien-lol.component';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'can-ho-dang-xu-ly', component: ListCanHoDangXuLyComponent},
   {path: 'dinh-gia-can-ho', component: DinhGiaCanHoComponent},
   {path: 'them-can-ho-moi', component: ThemMoiCanHoComponent},
-  {path: 'cap-nhat-can-ho/:id', component: CapNhatCanHoComponent}
+  {path: 'cap-nhat-can-ho/:id', component: CapNhatCanHoComponent},
+  {path: 'tien-lol', component: TienLolComponent}
 ];
 
 @NgModule({

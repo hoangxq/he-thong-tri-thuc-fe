@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CapNhatCanHoComponent } from './components/cap-nhat-can-ho/cap-nhat-can-ho.component';
 import { MaterialModule } from './material/material.module';
+import { TienLolComponent } from './components/tien-lol/tien-lol.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MaterialModule } from './material/material.module';
     ListCanHoDangXuLyComponent,
     DinhGiaCanHoComponent,
     ThemMoiCanHoComponent,
-    CapNhatCanHoComponent
+    CapNhatCanHoComponent,
+    TienLolComponent
   ],
   imports: [
     BrowserModule,
